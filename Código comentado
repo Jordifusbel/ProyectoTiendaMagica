@@ -1,0 +1,67 @@
+def accesoCasosTexttest(matrizCasosTest, rutaAccesoFichero):
+# Recibe como variables una matriz vacía y una ruta del fichero deseado
+    try:
+        if not isinstance(rutaAccesoFichero, str):
+            raise ValueError # Si la ruta no esta bien, devuelve un error
+        fichero = open(rutaAccesoFichero, 'r')
+    except FileNotFoundError:
+        print("Fichero no encontrado")
+        return []
+    except ValueError:
+        print("El nombre del fichero ha de ser un string")
+        return []
+    else: # Si no hay error, crea una matriz con todos los objetos del caso test, creando una lista para cada "day" y quitando las comas
+        matrizCasosTest = []
+        numeroPropiedadesItem = 0
+        for linea in fichero:
+            if linea.find("day") != -1:
+                casosTestDia = []
+            elif linea == "\n":
+                matrizCasosTest.append(casosTestDia)
+            elif linea.find("name") != -1:
+                numeroPropiedadesItem = len(linea.split(','))
+            else:
+                item = linea.rstrip().rsplit(',', maxsplit=numeroPropiedadesItem - 1)
+                casosTestDia.append(item)
+        fichero.close()
+        return matrizCasosTest
+
+
+def crearFicheroCasosTest(ficheroVolcadoCasosTest, matrizCasosTest):
+# Esta funcion recibe la matriz ya preparada de casos test, y crea un fichero con los datos de esta
+    try:
+        if not isinstance(ficheroVolcadoCasosTest, str):
+            raise ValueError
+        stdout = open(ficheroVolcadoCasosTest, 'w')
+    except ValueError:
+            print("La ruta de acceso al fichero ha de ser un string")
+    else:
+        for (offset, casosTestDia) in enumerate(matrizCasosTest):
+            stdout.write('-' * 5 + " Dia %d: " % offset + '-' * 5 + '\n')
+            for item in casosTestDia:
+                stdout.write(','.join(item) + '\n')
+        stdout.close()
+
+
+def mostrarCasosTest(matrizCasosTest):
+#Esta funcion muestra en pantalla una lista de la matriz creada anteriormente
+    for (offset, casosTestDia) in enumerate(matrizCasosTest):
+        print('-' * 5 + " Dia %d: " % offset + '-' * 5)
+        for item in casosTestDia:
+            print(item)
+
+
+if __name__ == "__main__":
+#Funcion para pasar los casos test si este codigo no esta importado
+    rutaAccesoFichero = "./stdout.gr"
+    # rutaAccesoFichero = "stdout_bug_conjured.gr"
+
+    matrizCasosTest = []
+
+    matrizCasosTest = accesoCasosTexttest(matrizCasosTest, rutaAccesoFichero)
+
+    mostrarCasosTest(matrizCasosTest)
+
+    ficheroVolcadoCasosTest = "./stdout.txt"
+
+    crearFicheroCasosTest(ficheroVolcadoCasosTest, matrizCasosTest)

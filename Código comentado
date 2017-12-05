@@ -1,8 +1,8 @@
 def accesoCasosTexttest(matrizCasosTest, rutaAccesoFichero):
-#Recibe como variables una matriz vacía y una ruta del fichero deseado
+# Recibe como variables una matriz vacía y una ruta del fichero deseado
     try:
         if not isinstance(rutaAccesoFichero, str):
-            raise ValueError #Si la ruta no esta bien, devuelve un error
+            raise ValueError # Si la ruta no esta bien, devuelve un error
         fichero = open(rutaAccesoFichero, 'r')
     except FileNotFoundError:
         print("Fichero no encontrado")
@@ -10,7 +10,7 @@ def accesoCasosTexttest(matrizCasosTest, rutaAccesoFichero):
     except ValueError:
         print("El nombre del fichero ha de ser un string")
         return []
-    else: #Si no hay error, crea una matriz con todos los objetos del caso test, creando una lista para cada "day" y quitando las comas
+    else: # Si no hay error, crea una matriz con todos los objetos del caso test, creando una lista para cada "day" y quitando las comas
         matrizCasosTest = []
         numeroPropiedadesItem = 0
         for linea in fichero:
@@ -28,7 +28,7 @@ def accesoCasosTexttest(matrizCasosTest, rutaAccesoFichero):
 
 
 def crearFicheroCasosTest(ficheroVolcadoCasosTest, matrizCasosTest):
-
+# Esta funcion recibe la matriz ya preparada de casos test, y crea un fichero con los datos de esta
     try:
         if not isinstance(ficheroVolcadoCasosTest, str):
             raise ValueError
@@ -44,7 +44,7 @@ def crearFicheroCasosTest(ficheroVolcadoCasosTest, matrizCasosTest):
 
 
 def mostrarCasosTest(matrizCasosTest):
-
+#Esta funcion muestra en pantalla una lista de la matriz creada anteriormente
     for (offset, casosTestDia) in enumerate(matrizCasosTest):
         print('-' * 5 + " Dia %d: " % offset + '-' * 5)
         for item in casosTestDia:
@@ -52,7 +52,7 @@ def mostrarCasosTest(matrizCasosTest):
 
 
 if __name__ == "__main__":
-
+#Funcion para pasar los casos test si este codigo no esta importado
     rutaAccesoFichero = "./stdout.gr"
     # rutaAccesoFichero = "stdout_bug_conjured.gr"
 

@@ -1,9 +1,0 @@
-class AgedBrie:
-    def __init__(self, sell_in, quality):
-    
-        Item.__init__(self, name, sell_in, quality)
-
-    def setQuality(self, value):
-
-
-    def update_quality(self):

@@ -1,0 +1,5 @@
+class Interface():
+
+    def update_quality(self):
+        # Comportamiento a implementar en las subclases
+        pass
